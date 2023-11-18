@@ -18,25 +18,58 @@ export interface IPost {
 const Main: FC = () => {
   const [page, setPage] = useState<number>(0);
   const [posts, setPosts] = useState<IPost[]>();
+  const [totalPage, setTotalPage] = useState<number>(0);
 
   const { account, getMe } = useMe();
 
-  const getPosts = async () => {
+  const getPosts = async (selectedPage: number) => {
     try {
       const response = await axios.get(`
-        ${process.env.REACT_APP_BACK_URL}/post?page=${page}`);
-
-      console.log(response);
+        ${process.env.REACT_APP_BACK_URL}/post?page=${selectedPage}`);
 
       setPosts(response.data);
+      setPage(selectedPage);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const getCount = async () => {
+    try {
+      const response = await axios.get(`
+        ${process.env.REACT_APP_BACK_URL}/post/count`);
+
+      setTotalPage(Math.floor(response.data.count / 10));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const pageComp = () => {
+    let pageCompArray = [];
+
+    for (let i = 0; i <= totalPage; i++) {
+      pageCompArray.push(
+        <li
+          key={i}
+          className={`${
+            page === i ? "font-bold" : "text-gray-300 hover:text-black"
+          }`}
+        >
+          <button disabled={page === i} onClick={() => getPosts(i)}>
+            {i + 1}
+          </button>
+        </li>
+      );
+    }
+
+    return pageCompArray;
+  };
+
   useEffect(() => {
     getMe();
-    getPosts();
+    getPosts(0);
+    getCount();
   }, []);
 
   return posts ? (
@@ -55,8 +88,8 @@ const Main: FC = () => {
             <PostCard key={i} index={i} post={v} />
           ))}
         </ul>
-        <ul className="flex text-lg justify-center">
-          <li>페이지</li>
+        <ul className="flex text-lg justify-center mt-2 gap-2">
+          {totalPage && pageComp()}
         </ul>
       </main>
     </>
