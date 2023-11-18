@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import axios from "axios";
 
+import { useMe } from "../hooks";
+
 import Header from "../components/Header";
 import PostCard from "../components/PostCard";
-import { useMe } from "../hooks";
 
 export interface IPost {
   id: number;
