@@ -9,22 +9,38 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  account   String   @unique
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  account   String    @unique
   password  String
   Post      Post[]
+  Comment   Comment[]
 }
 
 model Post {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  title     String
+  content   String    @db.Text
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  Comment   Comment[]
+
+  @@index([userId])
+}
+
+model Comment {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String
-  content   String
+  content   String   @db.Text
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
 
   @@index([userId])
+  @@index([postId])
 }

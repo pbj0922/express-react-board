@@ -1,10 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import axios from "axios";
-
-import { useMe } from "../hooks";
 
 import Header from "../components/Header";
+import axios from "axios";
 import PostCard from "../components/PostCard";
+import { useMe } from "../hooks";
 
 export interface IPost {
   id: number;
@@ -77,7 +76,7 @@ const Main: FC = () => {
     <>
       <Header account={account} />
       <main className="max-w-screen-md mx-auto">
-        <h1 className="mt-20 text-center font-bold text-2xl">게시판</h1>
+        <h1 className="mt-20 text-center font-bold text-2xl">h662's 게시판</h1>
         <ul className="mt-10 h-[440px]">
           <li className="flex justify-between border-b-2 font-semibold">
             <span className="w-2/12 p-2 text-center">아이디</span>
@@ -90,14 +89,12 @@ const Main: FC = () => {
           ))}
         </ul>
         <ul className="flex text-lg justify-center mt-2 gap-2">
-          {totalPage && pageComp()}
+          {totalPage !== 0 && pageComp()}
         </ul>
       </main>
     </>
   ) : (
-    <div className="min-h-screen flex justify-center items-center text-3xl font-bold">
-      Loading...
-    </div>
+    <div>Loading...</div>
   );
 };
 
