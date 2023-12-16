@@ -82,7 +82,12 @@ const Comment: FC<CommentProps> = ({ postId }) => {
       </form>
       <ul className="pt-10">
         {comments.map((v, i) => (
-          <CommentCard key={i} comment={v} />
+          <CommentCard
+            key={i}
+            comment={v}
+            comments={comments}
+            setComments={setComments}
+          />
         ))}
       </ul>
     </div>

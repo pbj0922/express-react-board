@@ -109,4 +109,95 @@ router.get("/", async (req, res) => {
   }
 });
 
+// 댓글 수정
+router.put("/:commentId", verifyToken, async (req: any, res) => {
+  try {
+    const { commentId } = req.params;
+    const { content } = req.body;
+    const { user } = req;
+
+    if (!commentId || isNaN(+commentId)) {
+      return res.status(400).json({
+        message: "Not exist comment id.",
+      });
+    }
+
+    if (!content || commentId.trim().length === 0) {
+      return res.status(400).json({
+        message: "Not exist content.",
+      });
+    }
+
+    const existComment = await client.comment.findUnique({
+      where: {
+        id: +commentId,
+      },
+    });
+
+    if (!existComment || existComment.userId !== user.id) {
+      return res.status(400).json({
+        message: "Not exist comment.",
+      });
+    }
+
+    const updatedComment = await client.comment.update({
+      where: {
+        id: +commentId,
+      },
+      data: {
+        content,
+      },
+      select,
+    });
+
+    return res.json(updatedComment);
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Server Error.",
+    });
+  }
+});
+
+// 댓글 삭제
+router.delete("/:commentId", verifyToken, async (req: any, res) => {
+  try {
+    const { commentId } = req.params;
+    const { user } = req;
+
+    if (!commentId || isNaN(+commentId)) {
+      return res.status(400).json({
+        message: "Not exist comment id.",
+      });
+    }
+
+    const existComment = await client.comment.findUnique({
+      where: {
+        id: +commentId,
+      },
+    });
+
+    if (!existComment || existComment.userId !== user.id) {
+      return res.status(400).json({
+        message: "Not exist comment.",
+      });
+    }
+
+    const deletedComment = await client.comment.delete({
+      where: {
+        id: +commentId,
+      },
+    });
+
+    return res.json(deletedComment.id);
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Server Error.",
+    });
+  }
+});
+
 export default router;
