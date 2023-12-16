@@ -99,4 +99,133 @@ router.get("/count", async (req, res) => {
   }
 });
 
+// 글 한개 조회
+router.get("/:postId", async (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    if (!postId || isNaN(+postId)) {
+      return res.status(400).json({
+        message: "Not exist post id.",
+      });
+    }
+
+    const post = await client.post.findUnique({
+      where: {
+        id: +postId,
+      },
+      select,
+    });
+
+    if (!post) {
+      return res.status(400).json({
+        message: "Not exist post.",
+      });
+    }
+
+    return res.json(post);
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Server Error.",
+    });
+  }
+});
+
+// 글 수정
+router.put("/:postId", verifyToken, async (req: any, res) => {
+  try {
+    const { postId } = req.params;
+    const { title, content } = req.body;
+    const { user } = req;
+
+    if (!postId || isNaN(+postId)) {
+      return res.status(400).json({
+        message: "Not exist post id.",
+      });
+    }
+
+    if (
+      (!title || title.trim().length === 0) &&
+      (!content || content.trim().length === 0)
+    ) {
+      return res.status(400).json({
+        message: "Not exist data.",
+      });
+    }
+
+    const existPost = await client.post.findUnique({
+      where: {
+        id: +postId,
+      },
+    });
+
+    if (!existPost || existPost.userId !== user.id) {
+      return res.status(400).json({
+        message: "Not exist post.",
+      });
+    }
+
+    const updatedPost = await client.post.update({
+      where: {
+        id: +postId,
+      },
+      data: {
+        title: title ? title : existPost.title,
+        content: content ? content : existPost.content,
+      },
+      select,
+    });
+
+    return res.json(updatedPost);
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Server Error.",
+    });
+  }
+});
+
+// 글 삭제
+router.delete("/:postId", verifyToken, async (req: any, res) => {
+  try {
+    const { postId } = req.params;
+    const { user } = req;
+
+    if (!postId || isNaN(+postId)) {
+      return res.status(400).json({
+        message: "Not exist post id.",
+      });
+    }
+
+    const existPost = await client.post.findUnique({
+      where: {
+        id: +postId,
+      },
+    });
+
+    if (!existPost || existPost.userId !== user.id) {
+      return res.status(400).json({
+        message: "Not exist post.",
+      });
+    }
+
+    const deletedPost = await client.post.delete({
+      where: {
+        id: +postId,
+      },
+    });
+
+    return res.json(deletedPost.id);
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Server Error.",
+    });
+  }
+});
+
 export default router;
