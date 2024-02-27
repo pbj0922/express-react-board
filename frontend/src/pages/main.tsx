@@ -94,7 +94,9 @@ const Main: FC = () => {
       </main>
     </>
   ) : (
-    <div>Loading...</div>
+    <div className="flex justify-center items-center min-h-screen font-bold text-2xl">
+      Loading...
+    </div>
   );
 };
 

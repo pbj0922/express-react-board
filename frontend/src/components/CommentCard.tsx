@@ -78,8 +78,9 @@ const CommentCard: FC<CommentCardProps> = ({
 
   return (
     <li className="flex mb-2">
-      <span className="w-20 text-right">{comment.user.account}</span>
-      <span className="grow pl-2">
+      <span className="w-20 text-right font-bold">{comment.user.account}</span>{" "}
+      님
+      <span className="grow pl-4">
         {isEdit ? (
           <input
             className="border-2 focus:outline-none focus:border-blue-300 px-1 rounded-md text-sm"

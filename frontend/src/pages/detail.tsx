@@ -148,7 +148,7 @@ const Detail: FC = () => {
                 </h1>
               )}
               <div className="text-right pb-2 text-sm px-20">
-                <span>{post.user.account}, </span>
+                <span className="font-bold">{post.user.account}</span> 님 ,
                 <span>
                   {formatDistanceToNow(new Date(post.createdAt), {
                     locale: ko,
@@ -170,7 +170,9 @@ const Detail: FC = () => {
             )}
           </div>
         ) : (
-          <div>Loading...</div>
+          <div className="flex justify-center items-center font-bold text-2xl">
+            Loading...
+          </div>
         )}
         <Comment postId={+postId!} />
       </main>
