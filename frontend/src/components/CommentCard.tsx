@@ -96,14 +96,14 @@ const CommentCard: FC<CommentCardProps> = ({
           {isEdit && (
             <button
               onClick={onClickEdit}
-              className="flex items-center text-sm mr-1"
+              className="flex items-center text-sm mr-1 button-style"
             >
               <FiEdit className="mr-1" size={16} /> Edit
             </button>
           )}
           <button
             onClick={() => setIsEdit(!isEdit)}
-            className="flex items-center text-sm"
+            className="flex items-center text-sm button-style ml-1"
           >
             {isEdit ? (
               "Cancel"
@@ -114,7 +114,7 @@ const CommentCard: FC<CommentCardProps> = ({
             )}
           </button>
           <button
-            className="flex items-center text-sm ml-2"
+            className="flex items-center text-sm ml-2 button-style"
             onClick={onClickDelete}
           >
             <FiTrash2 className="mr-1" size={16} /> Delete

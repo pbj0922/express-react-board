@@ -77,7 +77,7 @@ const Comment: FC<CommentProps> = ({ postId }) => {
         <input
           className="self-end mt-2 button-style"
           type="submit"
-          value="Create"
+          value="Comment"
         />
       </form>
       <ul className="pt-10">

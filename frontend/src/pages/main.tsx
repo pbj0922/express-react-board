@@ -76,19 +76,19 @@ const Main: FC = () => {
     <>
       <Header account={account} />
       <main className="max-w-screen-md mx-auto">
-        <h1 className="mt-20 text-center font-bold text-2xl">게시판</h1>
+        <h1 className="mt-20 text-center font-bold text-3xl">게시판</h1>
         <ul className="mt-10 h-[440px]">
           <li className="flex justify-between border-b-2 font-semibold">
-            <span className="w-2/12 p-2 text-center">아이디</span>
-            <span className="w-6/12 p-2 text-center">제목</span>
-            <span className="w-2/12 p-2 text-center">사용자</span>
-            <span className="w-2/12 p-2 text-center">작성일</span>
+            <span className="w-2/12 p-2 text-center">번호</span>
+            <span className="w-6/12 p-2 text-left">제목</span>
+            <span className="w-2/12 p-2 text-right">사용자</span>
+            <span className="w-2/12 p-2 text-right">작성일</span>
           </li>
           {posts.map((v, i) => (
             <PostCard key={i} index={i} post={v} />
           ))}
         </ul>
-        <ul className="flex text-lg justify-center mt-2 gap-2">
+        <ul className="flex text-lg justify-center gap-4 border-t-2">
           {totalPage !== 0 && pageComp()}
         </ul>
       </main>

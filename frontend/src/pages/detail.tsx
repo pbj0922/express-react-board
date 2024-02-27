@@ -92,23 +92,26 @@ const Detail: FC = () => {
   return (
     <>
       <Header account={account} />
-      <main className="max-w-screen-md mx-auto py-24">
+      <main className="max-w-screen-md mx-auto">
         {post ? (
           <div>
-            <div className="p-4 flex justify-between">
+            <div className="py-4 flex justify-between">
               <Link to="/" className="flex items-center">
                 <FiChevronLeft size={22} /> Back
               </Link>
               <div className="flex gap-2">
                 {editToggle && (
-                  <button onClick={onClickEdit} className="flex items-center">
+                  <button
+                    onClick={onClickEdit}
+                    className="flex items-center button-style"
+                  >
                     <FiEdit className="mr-1" size={22} /> Edit
                   </button>
                 )}
                 {account === post.user.account && (
                   <>
                     <button
-                      className="flex items-center"
+                      className="flex items-center button-style"
                       onClick={() => setEditToggle(!editToggle)}
                     >
                       {editToggle ? (
@@ -120,7 +123,7 @@ const Detail: FC = () => {
                       )}
                     </button>
                     <button
-                      className="flex items-center"
+                      className="flex items-center button-style"
                       onClick={() => setIsOpen(true)}
                     >
                       <FiTrash2 className="mr-1" size={22} /> Delete
@@ -173,17 +176,17 @@ const Detail: FC = () => {
       </main>
       {isOpen && (
         <div className="fixed w-full h-full bg-white top-0 left-0 bg-opacity-50 flex justify-center items-center">
-          <div className="text-xl p-8">
+          <div className="text-xl p-8 border-4 border-black rounded-lg">
             <div className="text-right">
               <button onClick={() => setIsOpen(false)}>
-                <FiX />
+                <FiX size={30} />
               </button>
             </div>
-            <h1 className="mt-8">정말 삭제하시겠습니까?</h1>
+            <h1 className="mt-4">정말 삭제하시겠습니까?</h1>
             <div className="mt-4 flex justify-center">
               <button
                 onClick={onClickDelete}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center button-style mr-2"
               >
                 <FiTrash2 className="mr-1" size={22} /> Delete
               </button>

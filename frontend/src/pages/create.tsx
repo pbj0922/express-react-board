@@ -3,7 +3,8 @@ import { FormEvent, useEffect, useState } from "react";
 import { useMe } from "../hooks";
 import Header from "../components/Header";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FiChevronLeft } from "react-icons/fi";
 
 const Create = () => {
   const [title, setTitle] = useState<string>("");
@@ -52,10 +53,18 @@ const Create = () => {
   return (
     <>
       <Header account={account} />
-      <main className="max-w-screen-md mx-auto py-24">
-        <h1 className="text-center font-bold py-8 text-2xl">New Post</h1>
+
+      <main className="max-w-screen-md mx-auto py-4">
+        <div className="p-4 flex justify-between">
+          <Link to="/" className="flex items-center">
+            <FiChevronLeft size={22} /> Back
+          </Link>
+        </div>
+        <h1 className="text-center font-bold py-8 text-2xl border-b-2">
+          New Post
+        </h1>
         <form
-          className="flex flex-col items-start px-20"
+          className="flex flex-col items-start px-20 mt-10"
           onSubmit={onSubmitCreate}
         >
           <label htmlFor="title" className="mb-2">

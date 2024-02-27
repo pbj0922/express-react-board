@@ -12,7 +12,7 @@ const Header: FC<HeaderProps> = ({ account }) => {
     window.location.reload();
   };
   return (
-    <header className="max-w-screen-md mx-auto flex items-center p-4">
+    <header className="max-w-screen-md mx-auto flex items-center p-4 border-b-2 broder-b-black">
       {account ? (
         <div>
           <span className="font-semibold">{account}</span>님 환영합니다!
@@ -25,16 +25,10 @@ const Header: FC<HeaderProps> = ({ account }) => {
         </div>
       ) : (
         <div>
-          <Link
-            className="text-blue-500 hover:text-blue-700 font-bold"
-            to="/sign-in"
-          >
+          <Link className="font-bold button-style" to="/sign-in">
             Sign In
           </Link>
-          <Link
-            className="ml-4 text-blue-500 hover:text-blue-700 font-bold"
-            to="/sign-up"
-          >
+          <Link className="ml-4 font-bold button-style" to="/sign-up">
             Sign Up
           </Link>
         </div>
